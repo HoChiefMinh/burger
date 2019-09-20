@@ -4,17 +4,18 @@ let burger = require("../models/burger");
 let router = express.Router();
 
 router.get("/", function (req, res) {
-    burger.SelectAll(function (data) {
-        var hbsObject = {
-            burgers: data
-        };
-        console.log(hbsObject);
-        res.render("index", hbsObject);
+        res.redirect("/burgers");
+    });
+
+router.get("/burgers", function(req, res) {
+    burger.selectAll(function(burgerData) {
+        res.render("index", {burger_data: burgerData
+        });
     });
 });
 
 router.post("/api/burgers", function (req, res) {
-    burger.inserOne([
+    burger.insertOne([
         "burger_name", "devoured"
     ],
         [
@@ -27,7 +28,7 @@ router.post("/api/burgers", function (req, res) {
 });
 
 router.put("/api/burgers/:id", function (req, res) {
-    var condition = "id = " + req.params.id;
+    let condition = "id = " + req.params.id;
 
     console.log("condition", condition);
 
@@ -45,18 +46,19 @@ router.put("/api/burgers/:id", function (req, res) {
         });
 });
 
-router.deleteOne("/api/burgers/:id", function (req, res) {
-    var condition = "id = " + req.params.id;
+// router.deleteOne("/api/burgers/:id", function (req, res) {
+//     let condition = "id = " + req.params.id;    
+//     console.log("condition", condition);
 
-    burger.deleteOne(condition, function (result) {
-        if (result.affectedRows == 0) {
-            // If no rows were changed, then the ID must not exist, so 404
-            return res.status(404).end();
-        } else {
-            res.status(200).end();
-        }
-    });
-});
+//     burger.deleteOne(condition, function (result) {
+//         if ((result.affectedRows == 0)) {
+//             // If no rows were changed, then the ID must not exist, so 404
+//             return res.status(404).end();
+//         } else {
+//             res.status(200).end();
+//         }
+//     });
+// });
 
 // Export routes for server.js to use.
 module.exports = router;

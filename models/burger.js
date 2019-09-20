@@ -23,4 +23,4 @@ deleteOne: function(condition, cb) {
     })
 }
 };
-module.exports = burgers;
+module.exports = burger;
