@@ -1,3 +1,4 @@
+// Import the ORM to create functions that will interact with the database.
 const connection = require("../config/orm");
 
 let burger = {
@@ -6,21 +7,23 @@ selectAll: function(cb) {
         cb(res);
     });
 },
-
+// The variables cols and vals are arrays.
 insertOne: function(cols, vals, cb) {
-    orm.selectAll("burgers", cols, vals, function(res) {
+    orm.insertOne("burgers", cols, vals, function(res) {
         cb(res);
     });
 },
 updateOne: function(objColVals, condition, cb) {
-    orm.selectAll("burgers", objColsVals, condition, function(res){
+    orm.updateOne("burgers", objColsVals, condition, function(res){
         cb(res);
     });
 },
 deleteOne: function(condition, cb) {
-    orm.selectAll("burgers", condition, function(res) {
+    orm.deleteOne("burgers", condition, function(res) {
         cb(res);
-    })
-}
+    });
+  }
 };
+
+// Export the database functions for the controller (burgersController.js).
 module.exports = burger;
