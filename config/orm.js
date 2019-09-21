@@ -19,6 +19,7 @@ function objToSql(ob) {
   // Loop through the keys and push the key/value as a string int array
   for (let key in ob) {
     let value = ob[key];
+    // check to skip hidden properties
     if (Object.hasOwnProperty.call(ob, key)) {
       if (typeof value === "string" && value.indexOf(" ") >= 0) {
         value = "'" + value + "'";
@@ -32,7 +33,7 @@ function objToSql(ob) {
 
 // Object for all our SQL statement functions.
 let orm = {
-  selectAll: function(tableInput, cb) {
+  all: function(tableInput, cb) {
     let queryString = "SELECT * FROM " + tableInput + ";";
 
     connection.query(queryString, function(err, res) {
@@ -42,7 +43,7 @@ let orm = {
       cb(res);
     });
   },
-  insertOne: function(table, cols, vals, cb) {
+  create: function(table, cols, vals, cb) {
     let queryString = "INSERT INTO " + table;
     
     queryString += " (";
@@ -63,7 +64,7 @@ let orm = {
   },
 
   // An example of objColVals would be {name: panther, sleepy: true}
-  updateOne: function(table, objColVals, condition, cb) {
+  update: function(table, objColVals, condition, cb) {
     let queryString = "UPDATE " + table;
      
     queryString += " SET ";
@@ -81,7 +82,7 @@ let orm = {
     });
   },
 
-  deleteOne: function(table, condition, cb) {
+  delete: function(table, condition, cb) {
     let queryString = "DELETE FROM " + table;
     queryString += " WHERE ";
     queryString += condition;

@@ -5,7 +5,7 @@ $(function () {
         event.preventDefault();
 
         let newBurger = {
-            burger_name: $("#burger").val().trim(),
+            burger_name: $("#bu").val().trim(),
             devoured: $("[burger_name]:checked").val().trim()
         };
 
